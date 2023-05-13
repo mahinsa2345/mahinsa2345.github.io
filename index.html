@@ -17022,7 +17022,7 @@ Notice how all the important data like hospitalizations and greenhouse gas emiss
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Exploratory-Analysis-&amp;-Data-Visualization">Exploratory Analysis &amp; Data Visualization<a class="anchor-link" href="#Exploratory-Analysis-&amp;-Data-Visualization">&#182;</a></h2><p>The next step, we will use exploratory analysis and data visualization techniques to explore and understand air quality data for NYC. Exploratory analysis involves summarizing and visualizing the data in various ways to identify patterns, trends, and relationships between variables. Data visualization, on the other hand, involves creating visual representations of the data, such as charts, graphs, and maps, that enable us to explore and communicate the insights and patterns we have discovered. These techniques help us to understand the data better, identify potential outliers and anomalies, and guide the development of predictive models.</p>
-<p>Let us begin by plotting out the total annual averages of each type of pollutant to see if there is any trend that is occurring. Let us also plot the mean quality for some of the major Boroughs (Bronx, Brooklyn, Manhattan, Staten Islands, and the Queens). Notice that this data set contains the average for the whole city so let us also plot that to see if the trend stays throughout the city.</p>
+<p>Let us begin by plotting out the total annual averages of each type of pollutant to see if there is any trend that is occurring. We will be using <a href="https://matplotlib.org/stable/api/matplotlib_configuration_api.html">matplotlib</a> to do so. This is a plotting library that is used to create high-quality visualizations for data analysis and presentation. Let us also plot the mean quality for some of the major Boroughs (Bronx, Brooklyn, Manhattan, Staten Islands, and the Queens). Notice that this data set contains the average for the whole city so let us also plot that to see if the trend stays throughout the city.</p>
 <p>It can also be useful to visualize the distribution and density of the dataset. So let us also create a box plot of the data for each pollutant using <a href="https://seaborn.pydata.org/">seaborn library</a>. Box plots are a simple and effective way to visualize the distribution of a variable and compare it across different categories or groups.</p>
 
 </div>
@@ -17322,7 +17322,7 @@ class="
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>It seems that other than Ozone, there is a clear trend of pollutants reducing over time. But this data only goes until 2019 (with the excpetion of SO2), so it would be useful to predict if this trend would stay in the future. This is where the Modeling and Machine Learning process can become important but more to that later.</p>
 <p>For now, even though we visualized the averages of the whole city, it is hard to tell where the worst is. And also how much has this impacted the people living there.</p>
-<p>Let's begin by seeing the different levels of pollutants throughout the different neighborhoods. We can accomplish this using Folium, a Python library for creating interactive maps, which will allow us to see the levels of pollutants in each neighborhood and how they vary across the city.</p>
+<p>Let's begin by seeing the different levels of pollutants throughout the different neighborhoods. We can accomplish this using <a href="https://python-visualization.github.io/folium/">Folium</a>, a Python library for creating interactive maps, which will allow us to see the levels of pollutants in each neighborhood and how they vary across the city.</p>
 <p>To start and simplify things lets make two functions. The first determines the color of a marker with red being the worst levels, yellow is in the middle and green as the best in the city. The second function does the actual mapping by taking a data frame of a type of pollutant and marking their amounts in the different neighborhoods using the color_producer to help visualize the severity.</p>
 
 </div>
@@ -29694,21 +29694,25 @@ class="
     <span class="n">asthma_adults</span> <span class="o">=</span> <span class="n">asthma</span><span class="p">[</span><span class="n">asthma</span><span class="p">[</span><span class="s1">&#39;Measure&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Estimated Annual Rate- 18 Yrs and Older&#39;</span><span class="p">]</span>
     <span class="n">asthma_child</span> <span class="o">=</span> <span class="n">asthma</span><span class="p">[</span><span class="n">asthma</span><span class="p">[</span><span class="s1">&#39;Measure&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Estimated Annual Rate- Children 0 to 17 Yrs Old&#39;</span><span class="p">]</span>
     
+    <span class="c1"># plots the adults data</span>
     <span class="n">place_plots</span> <span class="o">=</span> <span class="n">asthma_adults</span><span class="p">[</span><span class="n">asthma_adults</span><span class="p">[</span><span class="s2">&quot;Geo Place Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">places</span><span class="p">)]</span>
     <span class="n">place_plots</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">place_plots</span> <span class="o">=</span> <span class="n">place_plots</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
     <span class="n">place_plots</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Geo Place Name&quot;</span><span class="p">)[</span><span class="s1">&#39;Emergency Visits&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
     
+    <span class="c1"># sets titles and labels</span>
     <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Asthma Emergency Visits of Adults by &#39;</span> <span class="o">+</span> <span class="n">pollutant</span> <span class="o">+</span> <span class="s1">&#39; in NYC (2005-2015)&#39;</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Asthma Emergency Visits (per 100,000 adults)&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
+    
+    <span class="c1"># plots the children data</span>
     <span class="n">place_plots</span> <span class="o">=</span> <span class="n">asthma_child</span><span class="p">[</span><span class="n">asthma_child</span><span class="p">[</span><span class="s2">&quot;Geo Place Name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">places</span><span class="p">)]</span>
     <span class="n">place_plots</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">place_plots</span> <span class="o">=</span> <span class="n">place_plots</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
     <span class="n">place_plots</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Geo Place Name&quot;</span><span class="p">)[</span><span class="s1">&#39;Emergency Visits&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-
+    
+     <span class="c1"># sets titles and labels</span>
     <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Asthma Emergency Visits of Children by &#39;</span> <span class="o">+</span> <span class="n">pollutant</span> <span class="o">+</span> <span class="s1">&#39; in NYC (2005-2015)&#39;</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Asthma Emergency Visits (per 100,000 children)&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
@@ -29827,7 +29831,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let us also make a scatter plot plotting each neighborhood and its ozone level and asthma emergency visits.</p>
+<p>Let us also make a scatter plot plotting each neighborhood and its ozone level and asthma emergency visits. This is done by first setting up the two data sets and combining them using merge().</p>
 
 </div>
 </div>
@@ -29862,6 +29866,7 @@ class="
 <span class="n">O3_joined</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Geo Join ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Geo Place Name&#39;</span><span class="p">])</span>
 <span class="n">O3_joined</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;Levels&#39;</span><span class="p">,</span> <span class="s1">&#39;Asthma Emergency Visits&#39;</span><span class="p">)</span>
 
+<span class="c1"># gives appropriate labels and title</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Ozone Levels (ppb)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Asthma Emergency Visits&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Asthma Emergency Visits of Adults by Ozone in NYC (2015)&#39;</span><span class="p">)</span>
